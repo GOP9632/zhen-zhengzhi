@@ -1787,6 +1787,197 @@
       "cost": null,
       "challenges": [],
       "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "chiang-debt-400",
+      "speaker": "chiang",
+      "utteranceId": "closing-1",
+      "topic": "財政",
+      "quote": "4年下來，台北市我們總共減債超過了400億，是六都第一",
+      "verdict": "correct",
+      "summary": "減債超過400億是對的。市府依法定期公布的債務數字，蔣萬安111年底上任時是898億，今年9月底剩468億，少了430億。「六都第一」要跟其他五都比，我們還沒拿到國庫署的六都比較表，這部分先沒辦法確認。",
+      "analysis": "臺北市依財政紀律法須定期公布債務：截至115年9月底，1年以上公共債務未償餘額468億元、未滿1年0億元。財政局新聞稿寫明111年底蔣萬安上任時，債務未償餘額實際數是898億元。898 − 468 = 430億元，符合「超過400億」。\n\n「六都第一」：要比較六都同期的減債金額，財政部國庫署有「各級政府債務未償餘額」表，但網頁是動態載入，我們這次沒抓到檔案，所以這部分先不判定。\n\n要注意：減債多少也和中央統籌分配款、土地處分收入等有關，不完全只是市府節省的結果。",
+      "sources": [
+        {
+          "title": "最新債務訊息（依財政紀律法公布：截至115年9月底1年以上公共債務未償餘額468億元）",
+          "publisher": "臺北市政府財政局",
+          "url": "https://www.gov.taipei/cp.aspx?n=A55EF8E25C0DE850",
+          "kind": "primary"
+        },
+        {
+          "title": "蔣市府就職周年，減債74億元（債務未償餘額由898億元降至824億元）",
+          "publisher": "臺北市政府財政局",
+          "url": "https://dof.gov.taipei/News_Content.aspx?n=133E08708C6AB0EA&sms=72544237BBE4C5F6&s=AF77892B0D7E9C78",
+          "kind": "primary"
+        },
+        {
+          "title": "北市府積極招商又減債149億元（111年底上任時898億元）",
+          "publisher": "臺北市政府財政局",
+          "url": "https://dof.gov.taipei/News_Content.aspx?n=133E08708C6AB0EA&sms=72544237BBE4C5F6&s=C366E3645B245BD4",
+          "kind": "primary"
+        }
+      ],
+      "cost": null,
+      "challenges": [],
+      "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "chiang-parenting-480",
+      "speaker": "chiang",
+      "utteranceId": "press-2",
+      "topic": "育兒",
+      "quote": "因為我們今年推動的育兒減工時不減薪，半年來已經有480家企業響應",
+      "verdict": "unverifiable",
+      "summary": "480家是勞動局自己公布的數字（截至6月底，近900名員工受惠），跟蔣萬安講的一樣。但勞動局沒有公開參與的事業單位名單或申請統計表，我們沒辦法自己核對，所以先判無法查證。",
+      "analysis": "勞動局115/9/11新聞稿：「政策上路半年，截至今年6月底已有480家事業單位參與、近900名員工受惠」。數字和辯論說法一致。\n\n我們查了：勞動局新聞稿、政府資料開放平臺與臺北市資料大平臺，找不到參與單位名單或核定補助的統計表。依本站規則，機關自己公布、沒有附明細的單一數字，算「官方說法」，不能單獨用來證明自己的政績。\n\n缺什麼才能查證：勞動局核定補助的事業單位數與受惠人數統計（例如補助核銷資料）。",
+      "sources": [
+        {
+          "title": "臺北市育兒減少工時上路半年 蔣萬安拜會響應事業單位（115/9/11）",
+          "publisher": "臺北市政府勞動局",
+          "url": "https://bola.gov.taipei/News_Content.aspx?n=098B457D83590D7F&sms=72544237BBE4C5F6&s=6538F37ECC8B665F",
+          "kind": "official"
+        }
+      ],
+      "cost": null,
+      "challenges": [],
+      "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "chiang-public-daycare-52",
+      "speaker": "chiang",
+      "utteranceId": "press-2",
+      "topic": "育兒",
+      "quote": "我上任以來，公托名額增加52%",
+      "verdict": "unverifiable",
+      "summary": "市府自己的新聞稿寫的是「總托育人數成長53.5%」，跟「公托名額增加52%」不是同一個指標。市府也沒有公布蔣萬安上任時的公托名額，我們算不出成長幾%。",
+      "analysis": "社會局115/2/16新聞稿：全市已設92處公共托嬰機構，提供2,008個收托名額；公共化與準公共托育供給率82%。市府115/3/31新聞稿：蔣萬安上任至今「市府提供的總托育人數成長53.5%」，115年底預計再增加16處、620個公托名額。\n\n主計處《市政統計週報》第1165號：110年11月底公辦民營托嬰中心79所（含55所社區公共托育家園）。但這是機構數，不是名額，而且是前一任期的資料。\n\n缺什麼才能查證：111年12月（上任時）與現在的公托名額。",
+      "sources": [
+        {
+          "title": "北市托育政策再升級 公托擴增、臨托加碼（115/2/16）",
+          "publisher": "臺北市政府社會局",
+          "url": "https://dosw.gov.taipei/News_Content.aspx?n=6CA16D3397A7A302&sms=72544237BBE4C5F6&s=C7087A9180F39824",
+          "kind": "official"
+        },
+        {
+          "title": "兒童節前發布五大育兒友善政策（115/3/31）",
+          "publisher": "臺北市政府秘書處",
+          "url": "https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&sms=72544237BBE4C5F6&s=F4979C77DBCEAE5E",
+          "kind": "official"
+        },
+        {
+          "title": "市政統計週報第1165號：110年11月底臺北市托嬰中心",
+          "publisher": "臺北市政府主計處",
+          "url": "https://www-ws.gov.taipei/001/Upload/367/relfile/46908/8506424/6d86f838-844f-453d-bf81-84a626bf4a71.pdf",
+          "kind": "primary"
+        }
+      ],
+      "cost": null,
+      "challenges": [],
+      "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "chiang-renewal-24-14",
+      "speaker": "chiang",
+      "utteranceId": "press-6",
+      "topic": "都更",
+      "quote": "這4年，台北都更案量已經是過去的2.4倍，是其他5都加總1.4倍",
+      "verdict": "partly",
+      "summary": "跟交叉詰問時一樣的問題，而且這次「其他五都加總」從1.3倍變成1.4倍，同一場辯論講了兩個數字。內政部的資料算起來大約1.2倍以上，方向沒錯，但那是幾十年的累計，不是這4年；「2.4倍」是拿3年半跟之前整整8年比，市府沒公開明細。",
+      "analysis": "內政部國土管理署年報：截至113年底全國核定都更事業計畫1,199件，臺北658件，其他所有縣市合計541件，臺北約是其他縣市總和的1.2倍；只跟五都比會更高。這是從都更條例施行以來的累計數。\n\n蔣萬安在交叉詰問第一輪說「1.3倍」，這裡說「1.4倍」，兩個數字都找不到市府公布的計算方式。\n\n「2.4倍」：市長新聞稿（115/6/29）寫的是「近三年半臺北市都更報核案件數已達他上任前8年的2.4倍」，是3年半總數比8年總數，市府沒有公布逐年件數。",
+      "challenges": [
+        "「報核」「核定」「動工」是不同階段，拿哪一個來比，倍數差很多。"
+      ],
+      "sources": [
+        {
+          "title": "內政部國土管理署年報：都市更新（截至113年底各縣市核定件數）",
+          "publisher": "內政部國土管理署",
+          "url": "https://www.nlma.gov.tw/uploads/files/0a9cc112bdeb2ba9861f4f930c0ccbeb.pdf",
+          "kind": "primary"
+        },
+        {
+          "title": "出席內湖康樂街136巷公辦都更實施者簽約 蔣萬安：落實都更8箭政策、樹立重要里程碑（115/6/29）",
+          "publisher": "臺北市政府秘書處",
+          "url": "https://www.gov.taipei/News_Content.aspx?n=2044902FC839D045&s=A6D083ED73B8C53C",
+          "kind": "official"
+        }
+      ],
+      "cost": null,
+      "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "chiang-tree-director",
+      "speaker": "chiang",
+      "utteranceId": "closing-1",
+      "topic": "樹木",
+      "quote": "所以我們第一時間就對從公園處長到廠商都嚴懲",
+      "verdict": "unverifiable",
+      "summary": "廠商被罰、被求償32萬多是真的，公園處公告有寫。但「公園處長也被嚴懲」，公園處的公告完全沒提，我們也找不到任何懲處公文或公告。",
+      "analysis": "公園處115/9/21即時新聞澄清：茄苳樹4月會勘確認移植，因施工廠商施工不當、監造廠商督導不周而擅自移除；將依法裁處、求償32萬5210元，並檢討修改相關流程。全文沒有提到公園處長或公務員的懲處。\n\n我們查了：公園處與工務局網站、市府新聞稿，沒有找到公園處長被懲處的公告。\n\n缺什麼才能查證：市府對公園處主管人員的懲處令或人事處公告。",
+      "sources": [
+        {
+          "title": "東門市場附近茄苳樹遭廠商擅自移除 公園處依法裁處並求償32.5萬元（115/9/21）",
+          "publisher": "臺北市政府工務局公園路燈工程管理處",
+          "url": "https://www.gov.taipei/News_Content.aspx?n=74806083EBDF5A03&sms=72544237BBE4C5F6&s=28831B7E8102EB08",
+          "kind": "primary"
+        }
+      ],
+      "cost": null,
+      "challenges": [],
+      "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "shen-china-index",
+      "speaker": "shen",
+      "utteranceId": "closing-2",
+      "topic": "經歷",
+      "quote": "我2019年第1次成立國際的智庫，結果馬上就跟100多個國家合作，變成每年不斷更新的中國指數",
+      "verdict": "partly",
+      "summary": "「100多個國家」是對的，中國指數官網寫涵蓋101個國家和地區。但官網也寫，這一版是2022年1月到2024年10月蒐集的資料，是智庫成立好幾年後的事，不是「馬上」；官網上也看不到「每年更新」的紀錄。",
+      "analysis": "China Index 官網（關於本指數）：這一版收集了9個區域、101個國家的資料，期間是2022年1月到2024年10月，由台灣民主實驗室（Doublethink Lab）與34個區域夥伴合作。台灣民主實驗室官網也寫「China Index 追蹤101個國家、99項指標」。\n\n所以「100多個國家」有原始資料支持；但時間上不是成立後「馬上」，官網目前也沒有逐年更新的版本紀錄。2019年成立智庫這點，官網首頁沒寫成立年份，我們沒有另外確認。",
+      "sources": [
+        {
+          "title": "About China Index（資料期間與涵蓋國家）",
+          "publisher": "China Index（台灣民主實驗室）",
+          "url": "https://china-index.io/about",
+          "kind": "primary"
+        },
+        {
+          "title": "Doublethink Lab 官方網站",
+          "publisher": "台灣民主實驗室",
+          "url": "https://doublethinklab.org/",
+          "kind": "primary"
+        }
+      ],
+      "cost": null,
+      "challenges": [],
+      "checkedAt": "2026-11-02"
+    },
+    {
+      "id": "shen-best-legislator",
+      "speaker": "shen",
+      "utteranceId": "closing-2",
+      "topic": "經歷",
+      "quote": "我第1次當立委，從第1個會期到現在，每一個會期都是優秀立委",
+      "verdict": "unverifiable",
+      "summary": "「優秀立委」是公民監督國會聯盟（公督盟）評的。公督盟最新一次（第5會期）的新聞稿沒有列出名單文字，各會期名單我們還沒逐一核對，所以先判無法查證。",
+      "analysis": "我們查了：公督盟網站「第十一屆第五會期優秀立委頒獎典禮」新聞稿（只寫有30位優秀立委，正文沒有逐一列名）、公督盟立委評鑑資料頁。\n\n缺什麼才能查證：公督盟第11屆第1到第5會期的優秀立委名單。\n\n另外要知道，公督盟是民間團體，評鑑標準由它自己訂，「優秀立委」是它的評價，不是官方認證。",
+      "sources": [
+        {
+          "title": "第十一屆第五會期優秀立委頒獎典禮新聞稿",
+          "publisher": "公民監督國會聯盟",
+          "url": "https://ccw.org.tw/news/20261016",
+          "kind": "primary"
+        },
+        {
+          "title": "立委評鑑資料",
+          "publisher": "公民監督國會聯盟",
+          "url": "https://ccw.org.tw/assess",
+          "kind": "primary"
+        }
+      ],
+      "cost": null,
+      "challenges": [],
+      "checkedAt": "2026-11-02"
     }
   ]
 }
