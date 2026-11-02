@@ -23,7 +23,7 @@ for (const entry of index.debates) {
   for (const u of d.utterances ?? []) {
     if (utts.has(u.id)) err(f, `發言 id 重複：${u.id}`);
     utts.set(u.id, u);
-    if (!cands.has(u.speaker)) err(f, `發言 ${u.id} 的 speaker「${u.speaker}」不在 candidates`);
+    if (!cands.has(u.speaker) && u.speaker !== "press") err(f, `發言 ${u.id} 的 speaker「${u.speaker}」不在 candidates（媒體提問請用 "press"）`);
     if (!sections.has(u.section)) err(f, `發言 ${u.id} 的 section「${u.section}」不在 sections`);
     if (!u.text) err(f, `發言 ${u.id} 沒有 text`);
   }
@@ -32,6 +32,7 @@ for (const entry of index.debates) {
     if (claimIds.has(c.id)) err(f, `查核 id 重複：${c.id}`);
     claimIds.add(c.id);
     const u = utts.get(c.utteranceId);
+    if (!cands.has(c.speaker)) err(f, `查核 ${c.id} 的 speaker 必須是候選人`);
     if (!u) err(f, `查核 ${c.id} 對應的發言「${c.utteranceId}」不存在`);
     else {
       if (u.speaker !== c.speaker) err(f, `查核 ${c.id} 的 speaker 與發言不一致`);
@@ -43,6 +44,8 @@ for (const entry of index.debates) {
     for (const s of c.sources ?? []) {
       if (!/^https?:\/\//.test(s.url ?? "")) err(f, `查核 ${c.id} 的來源網址不合法：${s.url}`);
     }
+    if (c.cost && !c.cost.estimate) err(f, `查核 ${c.id} 的 cost 缺少 estimate（不涉及費用請設為 null）`);
+    if (c.checkedAt && !/^\d{4}-\d{2}-\d{2}$/.test(c.checkedAt)) err(f, `查核 ${c.id} 的 checkedAt 格式應為 YYYY-MM-DD`);
     if (d.isSample !== true && c.sample) err(f, `非範例的辯論中不應有範例查核：${c.id}`);
   }
   // 公正性提醒：列出每位候選人的查核數，差距過大時提示

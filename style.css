@@ -248,14 +248,19 @@ select {
 
 .summary-table th[scope="row"] {
   text-align: left;
+  white-space: nowrap;
 }
 
-/* 逐字稿：兩欄並列 */
+/* 逐字稿：兩欄並列，依發言順序排列 */
 .transcript-heads,
 .transcript-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+}
+
+.transcript-row {
+  margin-bottom: 12px;
 }
 
 .transcript-heads {
@@ -277,18 +282,31 @@ select {
   color: var(--muted);
   font-size: 0.9375rem;
   letter-spacing: 0.05em;
+  margin-top: 32px;
 }
 
-.utterance-col {
+.utterance {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px 16px;
+  min-width: 0;
 }
 
-.col-speaker {
-  display: none;
+.utterance.press {
+  margin-bottom: 12px;
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.utt-label {
   margin: 0 0 4px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.utt-speaker {
+  color: var(--text);
 }
 
 .utterance-text {
@@ -296,22 +314,29 @@ select {
   font-size: 1.0625rem;
 }
 
-.claim-mark {
+/* 每一句都是可點選的按鈕 */
+.sentence {
   font: inherit;
   color: inherit;
   background: none;
   border: 0;
   padding: 0;
+  margin: 0;
+  display: inline;
   cursor: pointer;
   text-align: inherit;
+  border-radius: 3px;
+}
+
+.sentence:hover,
+.sentence:focus-visible {
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+.sentence.checked {
   text-decoration: underline;
   text-decoration-thickness: 3px;
   text-underline-offset: 4px;
-}
-
-.claim-mark:hover,
-.claim-mark:focus-visible {
-  background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .mark-correct { text-decoration-color: var(--v-correct); }
@@ -323,7 +348,6 @@ select {
   font-size: 0.6875rem;
   vertical-align: super;
   margin-left: 2px;
-  text-decoration: none;
   display: inline-block;
 }
 
@@ -332,8 +356,29 @@ select {
 .mark-incorrect .mark-tag { color: var(--v-incorrect); }
 .mark-unverifiable .mark-tag { color: var(--v-unverifiable); }
 
-.claim-mark.dimmed {
-  opacity: 0.35;
+.sentence.dimmed {
+  opacity: 0.3;
+}
+
+.verdict-unchecked {
+  color: var(--muted);
+  border-style: dotted;
+}
+
+.note-banner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.context {
+  font-size: 0.9375rem;
 }
 
 .hint {
@@ -399,8 +444,9 @@ select {
   }
   .transcript-row {
     grid-template-columns: 1fr;
+    margin-bottom: 8px;
   }
-  .col-speaker {
-    display: block;
+  .utterance-empty {
+    display: none;
   }
 }
