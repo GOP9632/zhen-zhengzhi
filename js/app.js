@@ -67,6 +67,8 @@ function sourceList(sources) {
 }
 
 async function loadJSON(path) {
+  // 單一檔案預覽版會把資料直接內嵌在 window.__DATA__
+  if (window.__DATA__?.[path]) return window.__DATA__[path];
   const res = await fetch(path, { cache: "no-cache" });
   if (!res.ok) throw new Error(`無法載入 ${path}（${res.status}）`);
   return res.json();
@@ -134,11 +136,23 @@ function candidate(id) {
   return state.debate.candidates.find((c) => c.id === id);
 }
 
+// 像素頭像：兩人同尺寸、同模板（見 tools/pixel_avatars.py）
+function avatar(c, size) {
+  if (!c.avatar) return null;
+  const src = window.__ASSETS__?.[c.avatar] ?? c.avatar;
+  return el("img", { class: "avatar", src, width: size, height: size, alt: "", "aria-hidden": "true" });
+}
+
 function renderHeader() {
   const d = state.debate;
   $("#debate-title").textContent = d.title;
   $("#debate-meta").textContent = `${d.date} · ${d.candidates.map((c) => `${c.name}（${c.party}）`).join("、")}`;
   $("#debate-format").textContent = d.format ?? "";
+  $("#debate-candidates").replaceChildren(
+    ...d.candidates.map((c) =>
+      el("figure", { class: "candidate" }, [avatar(c, 96), el("figcaption", {}, [el("strong", { text: c.name }), el("span", { class: "muted", text: c.party })])])
+    )
+  );
 
   const banner = $("#sample-banner");
   if (d.isSample) {
@@ -233,7 +247,10 @@ function renderTranscript() {
     el(
       "div",
       { class: "transcript-heads", "aria-hidden": "true" },
-      state.order.map((id) => el("div", { class: "col-head", text: candidate(id).name }))
+      state.order.map((id) => {
+        const c = candidate(id);
+        return el("div", { class: "col-head" }, [avatar(c, 48), el("span", {}, [c.name, el("small", { class: "muted", text: c.party })])]);
+      })
     )
   );
 
@@ -254,7 +271,7 @@ function renderTranscript() {
         }
         row.append(
           el("article", { class: "utterance" }, [
-            el("p", { class: "utt-label" }, [el("strong", { class: "utt-speaker", text: candidate(id).name }), ` ${u.label ?? ""}`]),
+            el("p", { class: "utt-label" }, [avatar(candidate(id), 24), el("strong", { class: "utt-speaker", text: candidate(id).name }), ` ${u.label ?? ""}`]),
             u.sample ? el("span", { class: "sample-tag", text: "範例，非實際發言" }) : null,
             renderUtterance(u),
           ])

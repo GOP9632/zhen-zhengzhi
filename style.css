@@ -1,5 +1,5 @@
-/* 色彩變數：淺色模式為預設
-   刻意避開藍、綠等常與政黨聯想的顏色作為主色，候選人欄位一律使用相同的中性樣式。 */
+/* 版面：窄欄的說明區＋寬版雙欄逐字稿，兩位候選人用完全相同的中性樣式。
+   色彩：刻意避開藍、綠等常與政黨聯想的顏色。淺色為預設，深色依系統或明確設定切換。 */
 :root {
   --bg: #fafaf8;
   --surface: #ffffff;
@@ -10,28 +10,47 @@
   --sample-bg: #fff6d6;
   --sample-text: #5c4a00;
   --v-correct: #6a4bb5;
-  --v-partly: #b0700a;
+  --v-partly: #a0650a;
   --v-incorrect: #b33a3a;
   --v-unverifiable: #6b6b70;
-  color-scheme: light dark;
+  --avatar-bg: #efede8;
+  color-scheme: light;
 }
 
-/* 深色模式 */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121214;
-    --surface: #1c1c1f;
-    --text: #ececee;
-    --muted: #a0a0a8;
-    --border: #2e2e33;
+  :root:not([data-theme="light"]) {
+    --bg: #141413;
+    --surface: #1d1c1a;
+    --text: #ecebe7;
+    --muted: #a6a39c;
+    --border: #312f2b;
     --accent: #d8d4cc;
     --sample-bg: #3a3215;
     --sample-text: #f3dd8a;
     --v-correct: #b39cf0;
     --v-partly: #f0b450;
     --v-incorrect: #f08a8a;
-    --v-unverifiable: #a8a8b0;
+    --v-unverifiable: #aeaba5;
+    --avatar-bg: #2a2825;
+    color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #141413;
+  --surface: #1d1c1a;
+  --text: #ecebe7;
+  --muted: #a6a39c;
+  --border: #312f2b;
+  --accent: #d8d4cc;
+  --sample-bg: #3a3215;
+  --sample-text: #f3dd8a;
+  --v-correct: #b39cf0;
+  --v-partly: #f0b450;
+  --v-incorrect: #f08a8a;
+  --v-unverifiable: #aeaba5;
+  --avatar-bg: #2a2825;
+  color-scheme: dark;
 }
 
 * {
@@ -51,7 +70,8 @@ main,
 .site-footer {
   max-width: 1040px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 
 .site-header {
@@ -265,7 +285,7 @@ select {
 
 .transcript-heads {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 1;
   background: var(--bg);
   padding: 8px 0;
@@ -274,8 +294,61 @@ select {
 }
 
 .col-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 700;
   font-size: 1.125rem;
+}
+
+.col-head span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.col-head small {
+  font-weight: 400;
+  font-size: 0.8125rem;
+}
+
+/* 候選人介紹：兩人並排、同尺寸 */
+.candidates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 16px 0;
+}
+
+.candidate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.candidate figcaption {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+
+.candidate strong {
+  font-size: 1.125rem;
+}
+
+/* 像素頭像：放大時保持像素銳利 */
+.avatar {
+  image-rendering: pixelated;
+  background: var(--avatar-bg);
+  border-radius: 6px;
+  flex: none;
+}
+
+.utt-label .avatar {
+  vertical-align: middle;
+  margin-right: 6px;
+  border-radius: 4px;
 }
 
 .transcript-section > h3 {

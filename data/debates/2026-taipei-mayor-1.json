@@ -21,12 +21,14 @@
     {
       "id": "shen",
       "name": "沈伯洋",
-      "party": "民主進步黨"
+      "party": "民主進步黨",
+      "avatar": "img/shen.svg"
     },
     {
       "id": "chiang",
       "name": "蔣萬安",
-      "party": "中國國民黨"
+      "party": "中國國民黨",
+      "avatar": "img/chiang.svg"
     }
   ],
   "sections": [
