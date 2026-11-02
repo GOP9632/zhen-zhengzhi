@@ -2,39 +2,94 @@
 <html lang="zh-Hant-TW">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>真政治</title>
-  <meta name="description" content="公平、公正、透明地揭露台灣政治資訊">
+  <meta name="description" content="公平、公正、透明地揭露台灣政治資訊：辯論逐字稿與發言查核">
   <link rel="stylesheet" href="style.css">
+  <script src="js/app.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <h1>真政治</h1>
-    <p class="subtitle">公平、公正、透明地揭露台灣政治資訊</p>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <p class="brand">真政治 <span class="brand-sub">辯論逐字稿查核</span></p>
+      <button type="button" class="link-btn" id="about-btn">關於本站</button>
+    </div>
   </header>
 
-  <main>
-    <section aria-labelledby="principles-title">
-      <h2 id="principles-title">我們的三個原則</h2>
-      <ul class="principles">
-        <li>
-          <h3>公正</h3>
-          <p>不偏袒任何政黨或人物。</p>
-        </li>
-        <li>
-          <h3>可查證</h3>
-          <p>每一筆資訊都附上原始來源。</p>
-        </li>
-        <li>
-          <h3>透明</h3>
-          <p>資料怎麼來、怎麼整理，都公開說明。</p>
-        </li>
-      </ul>
+  <main class="wrap">
+    <div class="debate-picker" hidden>
+      <label for="debate-select">選擇辯論</label>
+      <select id="debate-select"></select>
+    </div>
+
+    <section class="hero" aria-labelledby="debate-title">
+      <p class="eyebrow" id="debate-date"></p>
+      <h1 id="debate-title">載入中…</h1>
+      <div id="versus" class="versus"></div>
     </section>
+
+    <div class="toolbar" id="toolbar">
+      <div class="chips" id="filter-chips" role="group" aria-label="依查核結果篩選"></div>
+      <button type="button" class="link-btn" id="swap-btn">左右對調</button>
+    </div>
+    <p class="hint">點任何一句話，就能看查核、執行費用與來源。有底色的句子已完成查核。</p>
+
+    <div id="transcript" class="transcript"></div>
   </main>
 
-  <footer class="site-footer">
-    <p>真政治 · 建置中</p>
+  <footer class="wrap site-footer">
+    <p>真政治 · 資料與程式碼公開於 <a href="https://github.com/GOP9632/zhen-zhengzhi" target="_blank" rel="noopener noreferrer">GitHub</a>，歡迎指正。</p>
   </footer>
+
+  <!-- 句子查核內容 -->
+  <dialog id="claim-dialog" class="sheet" aria-labelledby="claim-title">
+    <form method="dialog" class="sheet-close">
+      <button class="icon-btn" aria-label="關閉">✕</button>
+    </form>
+    <div id="claim-body"></div>
+  </dialog>
+
+  <!-- 關於本站：原則、判定標準、逐字稿來源、查核進度 -->
+  <dialog id="about-dialog" class="sheet" aria-labelledby="about-title">
+    <form method="dialog" class="sheet-close">
+      <button class="icon-btn" aria-label="關閉">✕</button>
+    </form>
+    <h2 id="about-title">關於本站</h2>
+    <p>把政治人物的發言攤開，逐句對照公開資料。兩位候選人用同一套標準與版面。</p>
+
+    <details open>
+      <summary>判定標準</summary>
+      <dl class="verdict-defs">
+        <div><dt><span class="verdict verdict-correct">正確</span></dt><dd>跟原始資料對得上，也沒有漏掉會改變結論的背景。</dd></div>
+        <div><dt><span class="verdict verdict-partly">部分正確</span></dt><dd>有根據，但講得太滿、少了重要背景，或只說了一半。</dd></div>
+        <div><dt><span class="verdict verdict-incorrect">錯誤</span></dt><dd>跟原始資料明顯不符。</dd></div>
+        <div><dt><span class="verdict verdict-unverifiable">無法查證</span></dt><dd>找不到原始資料可以判斷。我們會寫出查過哪些地方、還缺什麼資料。</dd></div>
+      </dl>
+      <p><strong>只看原始資料。</strong>新聞本來就可能有立場，所以新聞只當找資料的線索，不能當證據。能當證據的是：政府統計與開放資料、預算書、審計部報告、議會紀錄或影音、法規、公告與合約、學術報告，以及當事人自己的原始貼文或影片。</p>
+      <p>機關自己發的新聞稿，如果附了可以驗證的數字，算原始資料；如果只是一句說法、沒有附數據，算「官方說法」，不能拿來證明自己的政績。每個來源旁邊都會標明是哪一種。</p>
+      <p class="muted">只查可以驗證的事實和數字，不評論立場或價值選擇。有數字、講政績、或是指控對手的句子都會查，兩位候選人用同一套標準，不追求筆數一樣多。</p>
+    </details>
+
+    <details>
+      <summary>查核進度</summary>
+      <div id="summary"></div>
+    </details>
+
+    <details>
+      <summary>這場辯論與逐字稿來源</summary>
+      <p id="debate-format"></p>
+      <p id="transcript-note" class="muted"></p>
+      <div id="debate-sources"></div>
+    </details>
+
+    <details>
+      <summary>三個原則</summary>
+      <ul class="plain">
+        <li><strong>公正</strong>：不偏袒任何政黨或人物。</li>
+        <li><strong>可查證</strong>：每一筆查核都附公開來源。</li>
+        <li><strong>透明</strong>：判定標準、資料與修改紀錄都公開。</li>
+      </ul>
+    </details>
+  </dialog>
 </body>
 </html>
