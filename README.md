@@ -20,7 +20,7 @@
 
 ## 候選人像素頭像
 
-`img/*.svg` 由 `tools/pixel_avatars.py` 產生：兩人共用同一個 24×24 臉部與西裝模板、同一組配色，只差在髮型與是否戴眼鏡，不美化也不醜化任何一方，配色不用政黨色。修改後執行 `python3 tools/pixel_avatars.py` 重新產生。
+`img/chiang.svg`、`img/shen.svg` 由 `tools/pixel_avatars.py` 產生：32×32，兩人用同一套畫法與細緻度，只用公開形象中最好認的特徵區分（蔣萬安：較長臉型、側分後梳短髮；沈伯洋：較圓臉型、前梳瀏海、黑色粗框眼鏡），領帶用各自政黨色，不美化也不醜化任何一方。修改後執行 `python3 tools/pixel_avatars.py` 重新產生。
 
 ## 政黨黨徽
 
