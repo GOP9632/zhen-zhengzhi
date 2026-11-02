@@ -196,7 +196,7 @@ function renderSummary() {
 function renderUtterance(u) {
   const d = state.debate;
   const claims = d.claims.filter((c) => c.utteranceId === u.id);
-  const isCandidate = u.speaker !== "press";
+  const isCandidate = Boolean(candidate(u.speaker));
   const p = el("p", { class: "utterance-text" });
   splitSentences(u.text).forEach((s, i) => {
     if (s.br) {
@@ -239,45 +239,36 @@ function renderUtterance(u) {
   return p;
 }
 
+// 對話形式：依實際發言順序排列，候選人左右各一側（可對調），主持人與媒體提問置中
 function renderTranscript() {
   const d = state.debate;
   state.sentences = [];
   const root = $("#transcript");
-  root.replaceChildren(
-    el(
-      "div",
-      { class: "transcript-heads", "aria-hidden": "true" },
-      state.order.map((id) => {
-        const c = candidate(id);
-        return el("div", { class: "col-head" }, [avatar(c, 48), el("span", {}, [c.name, el("small", { class: "muted", text: c.party })])]);
-      })
-    )
-  );
+  root.replaceChildren();
 
   for (const section of d.sections) {
-    const sec = el("section", { class: "transcript-section" }, [el("h3", { text: section.title })]);
+    const sec = el("section", { class: "chat-section" }, [el("h3", { class: "chat-divider" }, el("span", { text: section.title }))]);
     for (const u of d.utterances.filter((x) => x.section === section.id)) {
-      if (u.speaker === "press") {
+      const c = candidate(u.speaker);
+      if (!c) {
         sec.append(
-          el("div", { class: "utterance press" }, [el("p", { class: "utt-label", text: u.label }), renderUtterance(u)])
+          el("div", { class: "msg msg-host" }, [
+            el("div", { class: "bubble" }, [el("p", { class: "bubble-meta", text: u.label ?? "" }), renderUtterance(u)]),
+          ])
         );
         continue;
       }
-      const row = el("div", { class: "transcript-row" });
-      for (const id of state.order) {
-        if (id !== u.speaker) {
-          row.append(el("div", { class: "utterance-empty", "aria-hidden": "true" }));
-          continue;
-        }
-        row.append(
-          el("article", { class: "utterance" }, [
-            el("p", { class: "utt-label" }, [avatar(candidate(id), 24), el("strong", { class: "utt-speaker", text: candidate(id).name }), ` ${u.label ?? ""}`]),
+      const side = state.order.indexOf(c.id) === 0 ? "left" : "right";
+      sec.append(
+        el("article", { class: `msg msg-${side}` }, [
+          avatar(c, 44),
+          el("div", { class: "bubble" }, [
+            el("p", { class: "bubble-meta" }, [el("strong", { text: c.name }), ` · ${u.label ?? ""}`]),
             u.sample ? el("span", { class: "sample-tag", text: "範例，非實際發言" }) : null,
             renderUtterance(u),
-          ])
-        );
-      }
-      sec.append(row);
+          ]),
+        ])
+      );
     }
     root.append(sec);
   }

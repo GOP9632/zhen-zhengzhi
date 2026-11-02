@@ -23,7 +23,7 @@ for (const entry of index.debates) {
   for (const u of d.utterances ?? []) {
     if (utts.has(u.id)) err(f, `發言 id 重複：${u.id}`);
     utts.set(u.id, u);
-    if (!cands.has(u.speaker) && u.speaker !== "press") err(f, `發言 ${u.id} 的 speaker「${u.speaker}」不在 candidates（媒體提問請用 "press"）`);
+    if (!cands.has(u.speaker) && !["press", "moderator"].includes(u.speaker)) err(f, `發言 ${u.id} 的 speaker「${u.speaker}」不在 candidates（媒體提問用 "press"，主持人用 "moderator"）`);
     if (!sections.has(u.section)) err(f, `發言 ${u.id} 的 section「${u.section}」不在 sections`);
     if (!u.text) err(f, `發言 ${u.id} 沒有 text`);
   }

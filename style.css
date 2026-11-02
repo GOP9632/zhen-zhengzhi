@@ -271,120 +271,92 @@ select {
   white-space: nowrap;
 }
 
-/* 逐字稿：兩欄並列，依發言順序排列 */
-.transcript-heads,
-.transcript-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.transcript-row {
-  margin-bottom: 12px;
-}
-
-.transcript-heads {
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
-  z-index: 1;
-  background: var(--bg);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  margin-top: 24px;
-}
-
-.col-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.125rem;
-}
-
-.col-head span {
+/* 逐字稿：對話形式。候選人氣泡分左右兩側，主持人與媒體提問置中 */
+.transcript {
   display: flex;
   flex-direction: column;
-  line-height: 1.3;
+  gap: 8px;
 }
 
-.col-head small {
-  font-weight: 400;
-  font-size: 0.8125rem;
-}
-
-/* 候選人介紹：兩人並排、同尺寸 */
-.candidates {
+.chat-section {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin: 16px 0;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.candidate {
+.chat-divider {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0;
-}
-
-.candidate figcaption {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.4;
-}
-
-.candidate strong {
-  font-size: 1.125rem;
-}
-
-/* 像素頭像：放大時保持像素銳利 */
-.avatar {
-  image-rendering: pixelated;
-  background: var(--avatar-bg);
-  border-radius: 6px;
-  flex: none;
-}
-
-.utt-label .avatar {
-  vertical-align: middle;
-  margin-right: 6px;
-  border-radius: 4px;
-}
-
-.transcript-section > h3 {
   color: var(--muted);
-  font-size: 0.9375rem;
-  letter-spacing: 0.05em;
-  margin-top: 32px;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  margin: 28px 0 4px;
 }
 
-.utterance {
+.chat-divider::before,
+.chat-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--border);
+}
+
+.msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.msg-right {
+  flex-direction: row-reverse;
+}
+
+.msg-host {
+  justify-content: center;
+}
+
+.bubble {
+  min-width: 0;
+  max-width: min(680px, 78%);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
-  min-width: 0;
+  border-radius: 16px;
+  padding: 10px 16px 12px;
 }
 
-.utterance.press {
-  margin-bottom: 12px;
+.msg-left .bubble {
+  border-top-left-radius: 4px;
+}
+
+.msg-right .bubble {
+  border-top-right-radius: 4px;
+}
+
+.msg-host .bubble {
+  max-width: min(720px, 92%);
+  background: transparent;
   border-style: dashed;
   color: var(--muted);
+  font-size: 0.9375rem;
 }
 
-.utt-label {
+.bubble-meta {
   margin: 0 0 4px;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
-.utt-speaker {
+.bubble-meta strong {
   color: var(--text);
 }
 
 .utterance-text {
   margin: 0;
   font-size: 1.0625rem;
+}
+
+.msg-host .utterance-text {
+  font-size: inherit;
 }
 
 /* 每一句都是可點選的按鈕 */
@@ -412,10 +384,10 @@ select {
   text-underline-offset: 4px;
 }
 
-.mark-correct { text-decoration-color: var(--v-correct); }
-.mark-partly { text-decoration-color: var(--v-partly); }
-.mark-incorrect { text-decoration-color: var(--v-incorrect); }
-.mark-unverifiable { text-decoration-color: var(--v-unverifiable); text-decoration-style: dashed; }
+.sentence.mark-correct { text-decoration-color: var(--v-correct); }
+.sentence.mark-partly { text-decoration-color: var(--v-partly); }
+.sentence.mark-incorrect { text-decoration-color: var(--v-incorrect); }
+.sentence.mark-unverifiable { text-decoration-color: var(--v-unverifiable); text-decoration-style: dashed; }
 
 .mark-tag {
   font-size: 0.6875rem;
@@ -512,14 +484,11 @@ select {
 
 /* 手機：兩欄改為上下排列，每段標出發言人 */
 @media (max-width: 639px) {
-  .transcript-heads {
-    display: none;
+  .bubble {
+    max-width: calc(100% - 50px);
   }
-  .transcript-row {
-    grid-template-columns: 1fr;
-    margin-bottom: 8px;
-  }
-  .utterance-empty {
-    display: none;
+  .msg .avatar {
+    width: 36px;
+    height: 36px;
   }
 }
