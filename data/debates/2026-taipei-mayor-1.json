@@ -1,0 +1,276 @@
+{
+  "id": "2026-taipei-mayor-1",
+  "title": "2026 臺北市長候選人辯論會（第一場）",
+  "date": "2026-10-31",
+  "format": "全程約 2 小時，分為政見申論、交叉詰問、媒體提問、候選人結論四個階段。依會前抽籤，沈伯洋先進行政見申論，蔣萬安先進行候選人結論。",
+  "isSample": true,
+  "sampleNote": "本頁的逐字稿段落與查核內容全部是「範例」，用來示範版面與資料格式，不是兩位候選人的實際發言，也不是真實查核結論。辯論本身的日期與流程取自下方公開來源。取得可驗證的完整逐字稿後，會逐段替換。",
+  "debateSources": [
+    {
+      "title": "臺北市長候選人辯論會文字直播",
+      "publisher": "ETtoday 新聞雲",
+      "url": "https://features.ettoday.net/taipei-debate-2026/"
+    },
+    {
+      "title": "北市長候選人辯論會登場 沈伯洋、蔣萬安交鋒政績與城市願景",
+      "publisher": "公視新聞網 PNN",
+      "url": "https://news.pts.org.tw/live/105"
+    }
+  ],
+  "candidates": [
+    { "id": "shen", "name": "沈伯洋", "party": "民主進步黨" },
+    { "id": "chiang", "name": "蔣萬安", "party": "中國國民黨" }
+  ],
+  "sections": [
+    { "id": "opening", "title": "政見申論" },
+    { "id": "cross", "title": "交叉詰問" },
+    { "id": "press", "title": "媒體提問" },
+    { "id": "closing", "title": "候選人結論" }
+  ],
+  "utterances": [
+    {
+      "id": "shen-opening",
+      "speaker": "shen",
+      "section": "opening",
+      "sample": true,
+      "text": "各位市民好。我認為臺北最迫切的是居住問題，我主張四年內大幅增加社會住宅供給，讓年輕人留得下來。我也會檢討現有的興建進度，公開每一案的時程。"
+    },
+    {
+      "id": "chiang-opening",
+      "speaker": "chiang",
+      "section": "opening",
+      "sample": true,
+      "text": "各位市民好。這四年市府推動了多項政策，其中公共托育名額比上任時明顯增加，接下來我們要繼續擴大，讓家長少一點壓力。"
+    },
+    {
+      "id": "shen-cross",
+      "speaker": "shen",
+      "section": "cross",
+      "sample": true,
+      "text": "我想請問市長，市府說要改善通勤，但尖峰時段部分捷運路線的擁擠程度並沒有改善，市府打算怎麼處理？"
+    },
+    {
+      "id": "chiang-cross",
+      "speaker": "chiang",
+      "section": "cross",
+      "sample": true,
+      "text": "我也想請教候選人，你提出的多項福利政策加起來，每年需要的經費不小，臺北市的財源足以支應嗎？"
+    },
+    {
+      "id": "shen-press",
+      "speaker": "shen",
+      "section": "press",
+      "sample": true,
+      "text": "回應記者的問題，我主張推動零到十八歲的育兒諮詢服務，這在其他城市已有前例，所需經費不高。"
+    },
+    {
+      "id": "chiang-press",
+      "speaker": "chiang",
+      "section": "press",
+      "sample": true,
+      "text": "回應記者的問題，都市更新這幾年的核定案件數已經是歷年最多，我們會持續放寬門檻、加快審議。"
+    },
+    {
+      "id": "chiang-closing",
+      "speaker": "chiang",
+      "section": "closing",
+      "sample": true,
+      "text": "最後，我要說，臺北市的財政狀況穩健，負債比過去下降，我們有能力推動接下來的建設。"
+    },
+    {
+      "id": "shen-closing",
+      "speaker": "shen",
+      "section": "closing",
+      "sample": true,
+      "text": "最後，臺北市的財源其實相當充足，只要調整預算優先順序，我提出的政策都可以在不舉新債的情況下完成。"
+    }
+  ],
+  "claims": [
+    {
+      "id": "shen-social-housing",
+      "speaker": "shen",
+      "utteranceId": "shen-opening",
+      "quote": "四年內大幅增加社會住宅供給",
+      "topic": "居住",
+      "sample": true,
+      "verdict": "partly",
+      "summary": "（範例）方向與現有計畫一致，但「大幅」沒有具體戶數，無法完整評估。",
+      "analysis": "（範例）真實查核時，會比對都市發展局公布的社會住宅興辦進度與完工戶數，並請候選人陣營提供具體目標戶數與用地清單。若目標戶數高於過去四年實際完工量，需說明用地與財源從何而來。",
+      "cost": {
+        "estimate": "（範例）依目標戶數與單戶興建成本推估",
+        "basis": "（範例）參考過去社宅標案的決標金額與每坪造價；土地若為市有地，主要成本為興建與營運。"
+      },
+      "challenges": [
+        "（範例）市區可用的市有土地有限，選址常遇到在地居民意見。",
+        "（範例）營建成本與工期近年上升，可能影響完工時程。"
+      ],
+      "sources": [
+        { "title": "臺北市政府都市發展局（社會住宅相關資訊）", "publisher": "臺北市政府", "url": "https://udd.gov.taipei/" },
+        { "title": "臺北市政府資料開放平臺", "publisher": "臺北市政府", "url": "https://data.taipei/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "chiang-public-childcare",
+      "speaker": "chiang",
+      "utteranceId": "chiang-opening",
+      "quote": "公共托育名額比上任時明顯增加",
+      "topic": "育兒",
+      "sample": true,
+      "verdict": "correct",
+      "summary": "（範例）若官方統計顯示名額確實成長，此說法成立；查核也會一併列出成長的基期與數字。",
+      "analysis": "（範例）真實查核時，會取社會局公布的公共托育名額，比較上任當年與最新一年的數字，並注意統計口徑（例如是否包含準公共化）是否一致。",
+      "cost": {
+        "estimate": "（範例）以每增加一個名額的設置與營運成本推估",
+        "basis": "（範例）參考市府預算書中公共托育相關科目的歷年金額。"
+      },
+      "challenges": [
+        "（範例）托育人員招募不易，名額增加後的人力是否足夠。",
+        "（範例）各行政區分布不均，需求高的區域仍可能排隊。"
+      ],
+      "sources": [
+        { "title": "臺北市政府社會局", "publisher": "臺北市政府", "url": "https://dosw.gov.taipei/" },
+        { "title": "臺北市政府主計處（預算書與統計）", "publisher": "臺北市政府", "url": "https://dbas.gov.taipei/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "shen-mrt-crowding",
+      "speaker": "shen",
+      "utteranceId": "shen-cross",
+      "quote": "尖峰時段部分捷運路線的擁擠程度並沒有改善",
+      "topic": "交通",
+      "sample": true,
+      "verdict": "unverifiable",
+      "summary": "（範例）公開資料以運量為主，缺少逐站、逐時段的擁擠度數據，目前無法查證。",
+      "analysis": "（範例）真實查核時，會查詢臺北捷運公司公布的運量統計；若公開資料不足以判斷「擁擠程度」，會標示為無法查證，並註明需要哪些資料（例如尖峰時段車廂負載率）。",
+      "cost": {
+        "estimate": "（範例）此為質詢，不涉及新政策經費",
+        "basis": "（範例）若後續提出加密班距或增購列車，會另行估算。"
+      },
+      "challenges": [
+        "（範例）擁擠程度的定義不一，不同指標可能得出不同結論。"
+      ],
+      "sources": [
+        { "title": "臺北大眾捷運股份有限公司", "publisher": "臺北捷運", "url": "https://www.metro.taipei/" },
+        { "title": "臺北市政府交通局", "publisher": "臺北市政府", "url": "https://www.dot.gov.taipei/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "chiang-welfare-budget",
+      "speaker": "chiang",
+      "utteranceId": "chiang-cross",
+      "quote": "每年需要的經費不小",
+      "topic": "財政",
+      "sample": true,
+      "verdict": "unverifiable",
+      "summary": "（範例）「不小」沒有具體金額，且對方政策的經費尚未完整公布，目前無法查證。",
+      "analysis": "（範例）真實查核時，會請雙方陣營提供各項政策的年度經費估算，再與市府總預算規模對照。在沒有具體數字前，標示為無法查證。",
+      "cost": {
+        "estimate": "（範例）此為質詢，不涉及新政策經費",
+        "basis": "（範例）待對方陣營公布各項政策經費後再行比對。"
+      },
+      "challenges": [
+        "（範例）多項政策可能共用經費或分年執行，加總方式會影響結論。"
+      ],
+      "sources": [
+        { "title": "臺北市政府主計處（總預算）", "publisher": "臺北市政府", "url": "https://dbas.gov.taipei/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "shen-parenting-consult",
+      "speaker": "shen",
+      "utteranceId": "shen-press",
+      "quote": "這在其他城市已有前例",
+      "topic": "育兒",
+      "sample": true,
+      "verdict": "correct",
+      "summary": "（範例）若能找到其他城市實施中的同類服務，此說法成立；查核會列出具體城市與計畫名稱。",
+      "analysis": "（範例）真實查核時，會搜尋其他縣市政府或國外城市的育兒諮詢服務公告，確認服務對象年齡、經費與成效，並說明與本政策的差異。",
+      "cost": {
+        "estimate": "（範例）參考前例城市的年度經費，依臺北市人口比例推估",
+        "basis": "（範例）主要成本為諮詢人力（社工、心理師）與系統建置。"
+      },
+      "challenges": [
+        "（範例）心理諮商專業人力不足，可能需要與民間機構合作。",
+        "（範例）「經費不高」需有具體金額才能評估。"
+      ],
+      "sources": [
+        { "title": "臺北市政府社會局", "publisher": "臺北市政府", "url": "https://dosw.gov.taipei/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "chiang-urban-renewal",
+      "speaker": "chiang",
+      "utteranceId": "chiang-press",
+      "quote": "核定案件數已經是歷年最多",
+      "topic": "居住",
+      "sample": true,
+      "verdict": "partly",
+      "summary": "（範例）若核定數確實創新高、但實際動工或完工數沒有同步增加，會判定為部分正確。",
+      "analysis": "（範例）真實查核時，會取都市更新處歷年核定、動工、完工案件數比較。「核定」與「完工」是不同階段，查核會同時呈現兩者。",
+      "cost": {
+        "estimate": "（範例）放寬門檻本身行政成本低，但容積獎勵可能帶來公共設施負擔",
+        "basis": "（範例）參考都更容積獎勵相關規定與過去案例。"
+      },
+      "challenges": [
+        "（範例）住戶整合是最大瓶頸，放寬門檻不一定能加快整合。",
+        "（範例）容積增加對周邊交通與公共設施的影響。"
+      ],
+      "sources": [
+        { "title": "臺北市都市更新處", "publisher": "臺北市政府", "url": "https://uro.gov.taipei/" },
+        { "title": "臺北市政府資料開放平臺", "publisher": "臺北市政府", "url": "https://data.taipei/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "chiang-debt",
+      "speaker": "chiang",
+      "utteranceId": "chiang-closing",
+      "quote": "負債比過去下降",
+      "topic": "財政",
+      "sample": true,
+      "verdict": "incorrect",
+      "summary": "（範例）此為示範「錯誤」判定的版面。若官方決算顯示負債金額或比率並未下降，會判定為錯誤。",
+      "analysis": "（範例）真實查核時，會取主計處決算與審計部審核報告中的債務餘額，比較上任時與最新年度；並註明比較的是「債務金額」還是「債務占歲出比率」。",
+      "cost": {
+        "estimate": "（範例）不涉及新政策經費",
+        "basis": "（範例）—"
+      },
+      "challenges": [
+        "（範例）債務有長短期之分，不同口徑可能得出相反結論。"
+      ],
+      "sources": [
+        { "title": "臺北市政府主計處（決算）", "publisher": "臺北市政府", "url": "https://dbas.gov.taipei/" },
+        { "title": "審計部", "publisher": "審計部", "url": "https://www.audit.gov.tw/" }
+      ],
+      "checkedAt": null
+    },
+    {
+      "id": "shen-no-new-debt",
+      "speaker": "shen",
+      "utteranceId": "shen-closing",
+      "quote": "在不舉新債的情況下完成",
+      "topic": "財政",
+      "sample": true,
+      "verdict": "incorrect",
+      "summary": "（範例）此為示範「錯誤」判定的版面。若政策總經費超過可調整的預算空間，會判定為錯誤。",
+      "analysis": "（範例）真實查核時，會把該陣營公布的各項政策經費加總，再與市府預算中可調整的部分（扣除人事、法定支出等）比較。",
+      "cost": {
+        "estimate": "（範例）依該陣營各項政策經費加總",
+        "basis": "（範例）參考市府總預算的歲出結構。"
+      },
+      "challenges": [
+        "（範例）多數預算為法定或延續性支出，可調整空間有限。"
+      ],
+      "sources": [
+        { "title": "臺北市政府主計處（總預算）", "publisher": "臺北市政府", "url": "https://dbas.gov.taipei/" },
+        { "title": "臺北市議會", "publisher": "臺北市議會", "url": "https://www.tcc.gov.tw/" }
+      ],
+      "checkedAt": null
+    }
+  ]
+}

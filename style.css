@@ -1,11 +1,18 @@
-/* 色彩變數：淺色模式為預設 */
+/* 色彩變數：淺色模式為預設
+   刻意避開藍、綠等常與政黨聯想的顏色作為主色，候選人欄位一律使用相同的中性樣式。 */
 :root {
   --bg: #fafaf8;
   --surface: #ffffff;
   --text: #1c1c1e;
   --muted: #5a5a60;
   --border: #e2e2e0;
-  --accent: #1f5fa8;
+  --accent: #3d3a36;
+  --sample-bg: #fff6d6;
+  --sample-text: #5c4a00;
+  --v-correct: #6a4bb5;
+  --v-partly: #b0700a;
+  --v-incorrect: #b33a3a;
+  --v-unverifiable: #6b6b70;
   color-scheme: light dark;
 }
 
@@ -17,7 +24,13 @@
     --text: #ececee;
     --muted: #a0a0a8;
     --border: #2e2e33;
-    --accent: #7fb0ea;
+    --accent: #d8d4cc;
+    --sample-bg: #3a3215;
+    --sample-text: #f3dd8a;
+    --v-correct: #b39cf0;
+    --v-partly: #f0b450;
+    --v-incorrect: #f08a8a;
+    --v-unverifiable: #a8a8b0;
   }
 }
 
@@ -36,14 +49,14 @@ body {
 .site-header,
 main,
 .site-footer {
-  max-width: 720px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: 0 16px;
 }
 
 .site-header {
-  padding-top: 64px;
-  padding-bottom: 32px;
+  padding-top: 48px;
+  padding-bottom: 24px;
 }
 
 h1 {
@@ -59,8 +72,26 @@ h1 {
 }
 
 h2 {
-  font-size: 1.25rem;
-  margin: 0 0 16px;
+  font-size: 1.375rem;
+  margin: 0 0 8px;
+}
+
+h3 {
+  font-size: 1.0625rem;
+  margin: 24px 0 8px;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.block {
+  margin-bottom: 40px;
 }
 
 .principles {
@@ -89,8 +120,266 @@ h2 {
   color: var(--muted);
 }
 
+/* 範例資料提示 */
+.sample-banner {
+  background: var(--sample-bg);
+  color: var(--sample-text);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.sample-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: var(--sample-bg);
+  color: var(--sample-text);
+  border-radius: 4px;
+  padding: 0 6px;
+  margin-bottom: 4px;
+}
+
+.block-tag {
+  display: block;
+  font-size: 0.875rem;
+  padding: 6px 10px;
+}
+
+.debate-picker {
+  margin-bottom: 16px;
+}
+
+.debate-sources h3 {
+  font-size: 0.9375rem;
+  margin-top: 8px;
+}
+
+.source-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* 判定標準 */
+.method {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 20px 0;
+}
+
+.method summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.verdict-defs {
+  margin: 12px 0;
+  display: grid;
+  gap: 8px;
+}
+
+.verdict-defs div {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.verdict-defs dd {
+  margin: 0;
+}
+
+.verdict {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.verdict-correct { color: var(--v-correct); }
+.verdict-partly { color: var(--v-partly); }
+.verdict-incorrect { color: var(--v-incorrect); }
+.verdict-unverifiable { color: var(--v-unverifiable); }
+
+/* 控制列 */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.btn,
+select {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+/* 統計表 */
+.summary h3 {
+  margin-top: 0;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+.summary-table th,
+.summary-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.summary-table th[scope="row"] {
+  text-align: left;
+}
+
+/* 逐字稿：兩欄並列 */
+.transcript-heads,
+.transcript-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.transcript-heads {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  margin-top: 24px;
+}
+
+.col-head {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.transcript-section > h3 {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  letter-spacing: 0.05em;
+}
+
+.utterance-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.col-speaker {
+  display: none;
+  margin: 0 0 4px;
+}
+
+.utterance-text {
+  margin: 0;
+  font-size: 1.0625rem;
+}
+
+.claim-mark {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.claim-mark:hover,
+.claim-mark:focus-visible {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.mark-correct { text-decoration-color: var(--v-correct); }
+.mark-partly { text-decoration-color: var(--v-partly); }
+.mark-incorrect { text-decoration-color: var(--v-incorrect); }
+.mark-unverifiable { text-decoration-color: var(--v-unverifiable); text-decoration-style: dashed; }
+
+.mark-tag {
+  font-size: 0.6875rem;
+  vertical-align: super;
+  margin-left: 2px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.mark-correct .mark-tag { color: var(--v-correct); }
+.mark-partly .mark-tag { color: var(--v-partly); }
+.mark-incorrect .mark-tag { color: var(--v-incorrect); }
+.mark-unverifiable .mark-tag { color: var(--v-unverifiable); }
+
+.claim-mark.dimmed {
+  opacity: 0.35;
+}
+
+.hint {
+  margin-top: 16px;
+  font-size: 0.875rem;
+}
+
+/* 查核內容對話框 */
+.claim-dialog {
+  width: min(640px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px 24px;
+}
+
+.claim-dialog::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+.dialog-close-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.claim-quote {
+  font-size: 1.25rem;
+  margin: 4px 0 12px;
+}
+
+.claim-verdict {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.claim-dialog h3 {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
 .site-footer {
-  padding-top: 48px;
+  padding-top: 32px;
   padding-bottom: 32px;
   color: var(--muted);
   font-size: 0.875rem;
@@ -100,5 +389,18 @@ h2 {
 @media (min-width: 640px) {
   .principles {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 手機：兩欄改為上下排列，每段標出發言人 */
+@media (max-width: 639px) {
+  .transcript-heads {
+    display: none;
+  }
+  .transcript-row {
+    grid-template-columns: 1fr;
+  }
+  .col-speaker {
+    display: block;
   }
 }
