@@ -51,14 +51,27 @@ function safeUrl(url) {
   }
 }
 
+// 來源種類：判定只看原始資料，新聞與查核報告只當入口
+const SOURCE_KINDS = {
+  primary: "原始資料",
+  official: "官方說法",
+  factcheck: "查核報告（入口）",
+  news: "新聞（入口）",
+};
+
 function sourceList(sources) {
   if (!sources?.length) return el("p", { class: "muted", text: "尚無來源。" });
+  const order = Object.keys(SOURCE_KINDS);
+  const sorted = [...sources].sort((a, b) => order.indexOf(a.kind ?? "news") - order.indexOf(b.kind ?? "news"));
   return el(
     "ul",
     { class: "source-list" },
-    sources.map((s) => {
+    sorted.map((s) => {
       const href = safeUrl(s.url);
+      const kind = SOURCE_KINDS[s.kind] ? s.kind : "news";
       return el("li", {}, [
+        el("span", { class: `src-kind src-${kind}`, text: SOURCE_KINDS[kind] }),
+        " ",
         href ? el("a", { href, target: "_blank", rel: "noopener noreferrer", text: s.title }) : s.title,
         s.publisher ? el("span", { class: "muted", text: ` · ${s.publisher}` }) : null,
       ]);
@@ -329,7 +342,8 @@ function openSentence(u, sentence, c) {
       where,
       el("h2", { id: "claim-title", class: "claim-quote", text: `「${sentence}」` }),
       el("div", { class: "claim-verdict" }, [verdictBadge(null), el("span", { text: "這句話還沒有查核。" })]),
-      el("p", { text: "我們會優先查核含具體數字或可用公開資料驗證的事實陳述。意見、價值判斷或對未來的承諾，會整理執行費用與實際會遇到的問題，而不判定對錯。" }),
+      el("p", { text: "有數字、講政績、或是指控對手的句子，我們都會去查。這句還沒輪到，或是它比較像意見、願景，沒辦法用資料判斷對錯。" }),
+      el("p", { class: "muted", text: "覺得這句應該查？按下面的按鈕告訴我們，最好附上你知道的原始資料（政府統計、公文、會議紀錄等）。" }),
       el("p", {}, [el("a", { class: "btn", href: issue.href, target: "_blank", rel: "noopener noreferrer", text: "建議查核這句話" })])
     );
     $("#claim-dialog").showModal();
@@ -343,22 +357,24 @@ function openSentence(u, sentence, c) {
     el("h2", { id: "claim-title", class: `claim-quote hl hl-${c.verdict}`, text: `「${sentence}」` }),
     el("div", { class: "claim-verdict" }, [verdictBadge(c.verdict), c.topic ? el("span", { class: "muted", text: c.topic }) : null]),
     el("p", { class: "claim-summary", text: c.summary }),
+    el("details", { class: "claim-detail" }, [
+      el("summary", { text: "看詳細：數字怎麼算、資料從哪來" }),
+      ...String(c.analysis ?? "")
+        .split(/\n\n+/)
+        .map((t) => el("p", { text: t })),
+      c.cost
+        ? el("div", {}, [
+            el("h3", { text: "執行所需費用" }),
+            el("p", {}, [el("strong", { text: c.cost.estimate })]),
+            c.cost.basis ? el("p", { class: "muted", text: `估算依據：${c.cost.basis}` }) : null,
+          ])
+        : null,
+      c.challenges?.length ? el("h3", { text: "要注意的地方" }) : null,
+      c.challenges?.length ? el("ul", {}, c.challenges.map((t) => el("li", { text: t }))) : null,
+    ]),
 
-    el("h3", { text: "數據查核" }),
-    el("p", { text: c.analysis }),
-
-    el("h3", { text: "執行所需費用" }),
-    c.cost
-      ? el("div", {}, [
-          el("p", {}, [el("strong", { text: c.cost.estimate })]),
-          c.cost.basis ? el("p", { class: "muted", text: `估算依據：${c.cost.basis}` }) : null,
-        ])
-      : el("p", { class: "muted", text: "此句是對既有事實的陳述，不涉及新的執行費用。" }),
-
-    el("h3", { text: "實際會遇到的問題" }),
-    c.challenges?.length ? el("ul", {}, c.challenges.map((t) => el("li", { text: t }))) : el("p", { class: "muted", text: "尚未整理。" }),
-
-    el("h3", { text: "公開來源" }),
+    el("h3", { text: "資料來源" }),
+    el("p", { class: "muted small", text: "判定只看「原始資料」（政府統計、法規、會議紀錄、審計報告、當事人原始發言等）。新聞和查核報告只用來找線索。" }),
     sourceList(c.sources),
     el("p", { class: "muted", text: c.checkedAt ? `查核日期：${c.checkedAt}` : "查核日期：尚未正式查核" })
   );

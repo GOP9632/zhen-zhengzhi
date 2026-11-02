@@ -3,6 +3,8 @@
 import { readFileSync } from "node:fs";
 
 const VERDICTS = ["correct", "partly", "incorrect", "unverifiable"];
+// 來源種類：primary 原始資料、official 官方說法、factcheck 查核報告（入口）、news 新聞（入口）
+const KINDS = ["primary", "official", "factcheck", "news"];
 const errors = [];
 const err = (file, msg) => errors.push(`${file}: ${msg}`);
 
@@ -43,18 +45,18 @@ for (const entry of index.debates) {
     if (!c.sources?.length) err(f, `查核 ${c.id} 沒有任何來源（每筆查核至少要一個公開來源）`);
     for (const s of c.sources ?? []) {
       if (!/^https?:\/\//.test(s.url ?? "")) err(f, `查核 ${c.id} 的來源網址不合法：${s.url}`);
+      if (!KINDS.includes(s.kind)) err(f, `查核 ${c.id} 的來源「${s.title}」缺少或有不合法的 kind（可用：${KINDS.join("、")}）`);
     }
+    // 新聞與查核報告只當入口：判定對錯一定要有原始資料
+    if (c.verdict !== "unverifiable" && !c.sample && !(c.sources ?? []).some((s) => s.kind === "primary"))
+      err(f, `查核 ${c.id} 判定為 ${c.verdict}，但沒有任何原始資料（kind: "primary"）；找不到原始資料請判 unverifiable`);
     if (c.cost && !c.cost.estimate) err(f, `查核 ${c.id} 的 cost 缺少 estimate（不涉及費用請設為 null）`);
     if (c.checkedAt && !/^\d{4}-\d{2}-\d{2}$/.test(c.checkedAt)) err(f, `查核 ${c.id} 的 checkedAt 格式應為 YYYY-MM-DD`);
     if (d.isSample !== true && c.sample) err(f, `非範例的辯論中不應有範例查核：${c.id}`);
   }
-  // 公正性提醒：列出每位候選人的查核數，差距過大時提示
+  // 列出每位候選人的查核數。筆數不必相等，重點是選題標準一致（有數字、政績、指控的句子都查）。
   const counts = [...cands].map((id) => [id, (d.claims ?? []).filter((c) => c.speaker === id).length]);
   console.log(`${f}：` + counts.map(([id, n]) => `${id} ${n} 筆`).join("、"));
-  const ns = counts.map(([, n]) => n);
-  if (Math.max(...ns) - Math.min(...ns) > 2) {
-    console.warn(`  提醒：各候選人的查核筆數差距較大，請確認選題標準一致。`);
-  }
 }
 
 if (errors.length) {
