@@ -30,7 +30,7 @@ def F(title, url):
     return S(title, "台灣事實查核中心", url, "factcheck")
 
 
-def patch_claims(patches, path=DATA):
+def patch_claims(patches, path=DATA, only=False):
     """依 id 更新既有查核的欄位（引文與發言對應不變）。"""
     d = json.loads(path.read_text(encoding="utf-8"))
     by_id = {c["id"]: c for c in d["claims"]}
@@ -41,9 +41,9 @@ def patch_claims(patches, path=DATA):
         c["checkedAt"] = CHECKED_AT
         if c["verdict"] != "unverifiable":
             assert any(s.get("kind") == "primary" for s in c["sources"]), f"{cid} 判定為 {c['verdict']} 但沒有原始資料"
-    missing = [c["id"] for c in d["claims"] if c["id"] not in patches]
     path.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"更新 {len(patches)} 筆；未更新：{missing}")
+    missing = [] if only else [c["id"] for c in d["claims"] if c["id"] not in patches]
+    print(f"更新 {len(patches)} 筆" + (f"；未更新：{missing}" if missing else ""))
 
 
 def add_claims(claims, path=DATA):
@@ -57,6 +57,8 @@ def add_claims(claims, path=DATA):
         c.setdefault("cost", None)
         c.setdefault("challenges", [])
         c.setdefault("checkedAt", CHECKED_AT)
+        if c["verdict"] != "unverifiable":
+            assert any(s.get("kind") == "primary" for s in c["sources"]), f"{c['id']} 判定為 {c['verdict']} 但沒有原始資料"
         if c["id"] in by_id:
             d["claims"][by_id[c["id"]]] = c
         else:
