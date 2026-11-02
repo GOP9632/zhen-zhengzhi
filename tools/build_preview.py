@@ -18,9 +18,10 @@ for d in index["debates"]:
     deb = json.loads((root / d["file"]).read_text(encoding="utf-8"))
     data[d["file"]] = deb
     for c in deb["candidates"]:
-        if c.get("avatar"):
-            svg = (root / c["avatar"]).read_bytes()
-            assets[c["avatar"]] = "data:image/svg+xml;base64," + base64.b64encode(svg).decode()
+        for key in ("avatar", "logo"):
+            if c.get(key):
+                svg = (root / c[key]).read_bytes()
+                assets[c[key]] = "data:image/svg+xml;base64," + base64.b64encode(svg).decode()
 
 payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
 asset_js = json.dumps(assets).replace("</", "<\\/")

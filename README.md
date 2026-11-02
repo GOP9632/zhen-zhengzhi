@@ -22,6 +22,10 @@
 
 `img/*.svg` 由 `tools/pixel_avatars.py` 產生：兩人共用同一個 24×24 臉部與西裝模板、同一組配色，只差在髮型與是否戴眼鏡，不美化也不醜化任何一方，配色不用政黨色。修改後執行 `python3 tools/pixel_avatars.py` 重新產生。
 
+## 政黨黨徽
+
+`img/party-*.svg` 由 `tools/party_logos.py` 依各黨標誌的基本幾何畫成像素版，兩黨用同樣的格數與處理方式。
+
 ## 單一檔案預覽
 
 `python3 tools/build_preview.py 輸出.html` 會把資料、圖片、CSS、JS 全部內嵌成一個檔案，方便直接分享預覽。

@@ -94,6 +94,12 @@ function splitSentences(text) {
 }
 
 async function init() {
+  $("#about-btn").addEventListener("click", () => $("#about-dialog").showModal());
+  $("#swap-btn").addEventListener("click", () => {
+    state.order.reverse();
+    renderVersus();
+    renderTranscript();
+  });
   try {
     const index = await loadJSON("data/index.json");
     const select = $("#debate-select");
@@ -103,15 +109,6 @@ async function init() {
     if (index.debates.length > 1) $(".debate-picker").hidden = false;
     select.addEventListener("change", () => loadDebate(select.value));
 
-    $("#swap-btn").addEventListener("click", () => {
-      state.order.reverse();
-      renderTranscript();
-    });
-    $("#verdict-filter").addEventListener("change", (e) => {
-      state.filter = e.target.value;
-      renderTranscript();
-    });
-
     const fromHash = index.debates.find((d) => `#${d.id}` === location.hash);
     const first = fromHash ?? index.debates[0];
     if (first) {
@@ -120,7 +117,7 @@ async function init() {
     }
   } catch (err) {
     $("#debate-title").textContent = "資料載入失敗";
-    $("#debate-meta").textContent = `${err.message}。若是直接用瀏覽器打開檔案，請改用本機伺服器（見 README）。`;
+    $("#debate-date").textContent = `${err.message}。若是直接用瀏覽器打開檔案，請改用本機伺服器（見 README）。`;
   }
 }
 
@@ -128,6 +125,10 @@ async function loadDebate(file) {
   const debate = await loadJSON(file);
   state.debate = debate;
   state.order = debate.candidates.map((c) => c.id);
+  // 每位候選人的政黨色，供 CSS 使用（兩人處理方式相同）
+  for (const c of debate.candidates) {
+    document.documentElement.style.setProperty(`--party-${c.id}`, c.color ?? "var(--muted)");
+  }
   renderHeader();
   renderTranscript();
 }
@@ -136,42 +137,71 @@ function candidate(id) {
   return state.debate.candidates.find((c) => c.id === id);
 }
 
+function asset(path) {
+  return window.__ASSETS__?.[path] ?? path;
+}
+
 // 像素頭像：兩人同尺寸、同模板（見 tools/pixel_avatars.py）
 function avatar(c, size) {
   if (!c.avatar) return null;
-  const src = window.__ASSETS__?.[c.avatar] ?? c.avatar;
-  return el("img", { class: "avatar", src, width: size, height: size, alt: "", "aria-hidden": "true" });
+  return el("img", { class: "avatar", src: asset(c.avatar), width: size, height: size, alt: "", "aria-hidden": "true", style: `--party: var(--party-${c.id})` });
+}
+
+function partyBadge(c) {
+  return el("span", { class: "party", style: `--party: var(--party-${c.id})` }, [
+    c.logo ? el("img", { src: asset(c.logo), width: 16, height: 16, alt: "", "aria-hidden": "true" }) : null,
+    c.partyShort ?? c.party,
+  ]);
 }
 
 function renderHeader() {
   const d = state.debate;
   $("#debate-title").textContent = d.title;
-  $("#debate-meta").textContent = `${d.date} · ${d.candidates.map((c) => `${c.name}（${c.party}）`).join("、")}`;
+  $("#debate-date").textContent = d.date.replaceAll("-", ".");
   $("#debate-format").textContent = d.format ?? "";
-  $("#debate-candidates").replaceChildren(
-    ...d.candidates.map((c) =>
-      el("figure", { class: "candidate" }, [avatar(c, 96), el("figcaption", {}, [el("strong", { text: c.name }), el("span", { class: "muted", text: c.party })])])
+  $("#transcript-note").textContent = d.isSample ? d.sampleNote ?? "" : d.transcriptNote ?? "";
+  $("#debate-sources").replaceChildren(el("h3", { text: "公開來源" }), sourceList(d.debateSources));
+  renderVersus();
+  renderFilters();
+}
+
+function renderVersus() {
+  const cards = state.order.map((id) => {
+    const c = candidate(id);
+    return el("div", { class: "vs-card", style: `--party: var(--party-${c.id})` }, [
+      avatar(c, 72),
+      el("div", { class: "vs-name" }, [el("strong", { text: c.name }), partyBadge(c)]),
+    ]);
+  });
+  $("#versus").replaceChildren(cards[0], el("span", { class: "vs", text: "VS", "aria-hidden": "true" }), cards[1]);
+}
+
+function renderFilters() {
+  const opts = [["all", "全部"], ...Object.entries(VERDICTS), ["unchecked", UNCHECKED]];
+  $("#filter-chips").replaceChildren(
+    ...opts.map(([v, label]) =>
+      el(
+        "button",
+        {
+          type: "button",
+          class: `chip chip-${v}`,
+          "aria-pressed": String(state.filter === v),
+          onclick: () => {
+            state.filter = v;
+            renderFilters();
+            renderTranscript();
+          },
+        },
+        [v !== "all" ? el("span", { class: `swatch hl-${v}`, "aria-hidden": "true" }) : null, label]
+      )
     )
   );
-
-  const banner = $("#sample-banner");
-  if (d.isSample) {
-    banner.className = "sample-banner";
-    banner.replaceChildren(el("strong", { text: "範例資料　" }), d.sampleNote ?? "");
-  } else {
-    banner.className = "note-banner";
-    banner.replaceChildren(el("strong", { text: "逐字稿來源　" }), d.transcriptNote ?? "");
-  }
-  banner.hidden = !(d.isSample ? d.sampleNote : d.transcriptNote);
-
-  $("#debate-sources").replaceChildren(el("h3", { text: "辯論公開來源" }), sourceList(d.debateSources));
 }
 
 function renderSummary() {
-  const d = state.debate;
   const cols = [...Object.values(VERDICTS), UNCHECKED];
   const table = el("table", { class: "summary-table" });
-  table.append(el("thead", {}, el("tr", {}, [el("th", { text: "候選人" }), el("th", { text: "總句數" }), ...cols.map((v) => el("th", { text: v }))])));
+  table.append(el("thead", {}, el("tr", {}, [el("th", { text: "" }), el("th", { text: "總句數" }), ...cols.map((v) => el("th", { text: v }))])));
   const body = el("tbody");
   for (const id of state.order) {
     const mine = state.sentences.filter((s) => s.speaker === id);
@@ -187,9 +217,8 @@ function renderSummary() {
   }
   table.append(body);
   $("#summary").replaceChildren(
-    el("h3", { text: "查核進度" }),
     el("div", { class: "table-scroll" }, table),
-    el("p", { class: "muted", text: "每一句都可以點開。已查核的句子依同一套標準挑選（含具體數字或可用公開資料驗證的事實陳述），其餘陸續補上。統計不代表候選人整體誠信。" })
+    el("p", { class: "muted", text: "統計只反映已查核的句子，不代表候選人整體誠信。" })
   );
 }
 
@@ -207,7 +236,7 @@ function renderUtterance(u) {
       p.append(s.text);
       return;
     }
-    // 句子與查核引文有重疊，就算這句已查核
+    // 句子與查核引文有重疊，整句都算已查核
     const claim = claims.find((c) => {
       const at = u.text.indexOf(c.quote);
       return at >= 0 && at < s.end && at + c.quote.length > s.start;
@@ -222,7 +251,7 @@ function renderUtterance(u) {
           role: "button",
           tabindex: "0",
           id: `${u.id}-s${i}`,
-          class: `sentence ${claim ? `checked mark-${v}` : ""}${dimmed ? " dimmed" : ""}`,
+          class: `sentence${claim ? ` hl hl-${v}` : ""}${dimmed ? " dimmed" : ""}`,
           "aria-label": `${s.text}（${VERDICTS[claim?.verdict] ?? UNCHECKED}）`,
           onclick: () => openSentence(u, s.text, claim),
           onkeydown: (e) => {
@@ -232,7 +261,7 @@ function renderUtterance(u) {
             }
           },
         },
-        [s.text, claim ? el("span", { class: "mark-tag", text: VERDICTS[v] }) : null]
+        s.text
       )
     );
   });
@@ -247,24 +276,23 @@ function renderTranscript() {
   root.replaceChildren();
 
   for (const section of d.sections) {
-    const sec = el("section", { class: "chat-section" }, [el("h3", { class: "chat-divider" }, el("span", { text: section.title }))]);
+    const sec = el("section", { class: "chat-section" }, [el("h2", { class: "chat-divider" }, el("span", { text: section.title }))]);
     for (const u of d.utterances.filter((x) => x.section === section.id)) {
       const c = candidate(u.speaker);
       if (!c) {
         sec.append(
           el("div", { class: "msg msg-host" }, [
-            el("div", { class: "bubble" }, [el("p", { class: "bubble-meta", text: u.label ?? "" }), renderUtterance(u)]),
+            el("details", { class: "host-bubble", open: u.speaker === "press" }, [el("summary", { text: u.label ?? "主持人" }), renderUtterance(u)]),
           ])
         );
         continue;
       }
       const side = state.order.indexOf(c.id) === 0 ? "left" : "right";
       sec.append(
-        el("article", { class: `msg msg-${side}` }, [
-          avatar(c, 44),
+        el("article", { class: `msg msg-${side}`, style: `--party: var(--party-${c.id})` }, [
+          avatar(c, 40),
           el("div", { class: "bubble" }, [
-            el("p", { class: "bubble-meta" }, [el("strong", { text: c.name }), ` · ${u.label ?? ""}`]),
-            u.sample ? el("span", { class: "sample-tag", text: "範例，非實際發言" }) : null,
+            el("p", { class: "bubble-meta" }, [el("strong", { text: c.name }), el("span", { text: u.label ?? "" })]),
             renderUtterance(u),
           ]),
         ])
@@ -284,15 +312,21 @@ function openSentence(u, sentence, c) {
   const d = state.debate;
   const speaker = candidate(u.speaker);
   const section = d.sections.find((s) => s.id === u.section);
-  const where = `${speaker.name} · ${section?.title ?? ""}${u.label ? `（${u.label}）` : ""}`;
+  const where = el("p", { class: "sheet-where" }, [
+    avatar(speaker, 28),
+    el("strong", { text: speaker.name }),
+    partyBadge(speaker),
+    el("span", { class: "muted", text: `${section?.title ?? ""}${u.label ? ` · ${u.label}` : ""}` }),
+  ]);
   const body = $("#claim-body");
 
   if (!c) {
     const issue = new URL(SUGGEST_URL);
     issue.searchParams.set("title", `查核建議：${speaker.name}「${sentence.slice(0, 40)}」`);
     issue.searchParams.set("body", `辯論：${d.title}\n段落：${section?.title ?? ""} ${u.label ?? ""}\n句子：「${sentence}」\n\n建議查核的重點與可參考的公開來源：\n`);
-    body.replaceChildren(
-      el("p", { class: "muted", text: where }),
+    fill(
+      body,
+      where,
       el("h2", { id: "claim-title", class: "claim-quote", text: `「${sentence}」` }),
       el("div", { class: "claim-verdict" }, [verdictBadge(null), el("span", { text: "這句話還沒有查核。" })]),
       el("p", { text: "我們會優先查核含具體數字或可用公開資料驗證的事實陳述。意見、價值判斷或對未來的承諾，會整理執行費用與實際會遇到的問題，而不判定對錯。" }),
@@ -305,10 +339,10 @@ function openSentence(u, sentence, c) {
   fill(
     body,
     c.sample ? el("p", { class: "sample-tag block-tag", text: "範例查核：示範版面用，不是真實查核結論" }) : null,
-    el("p", { class: "muted", text: `${where}${c.topic ? ` · ${c.topic}` : ""}` }),
-    el("h2", { id: "claim-title", class: "claim-quote", text: `「${c.quote}」` }),
-    el("p", { class: "muted context" }, `完整句子：${sentence}`),
-    el("div", { class: "claim-verdict" }, [verdictBadge(c.verdict), el("span", { text: c.summary })]),
+    where,
+    el("h2", { id: "claim-title", class: `claim-quote hl hl-${c.verdict}`, text: `「${sentence}」` }),
+    el("div", { class: "claim-verdict" }, [verdictBadge(c.verdict), c.topic ? el("span", { class: "muted", text: c.topic }) : null]),
+    el("p", { class: "claim-summary", text: c.summary }),
 
     el("h3", { text: "數據查核" }),
     el("p", { text: c.analysis }),
@@ -333,8 +367,7 @@ function openSentence(u, sentence, c) {
 
 // 點對話框外圍可關閉
 document.addEventListener("click", (e) => {
-  const dlg = $("#claim-dialog");
-  if (e.target === dlg) dlg.close();
+  if (e.target instanceof HTMLDialogElement) e.target.close();
 });
 
 init();
