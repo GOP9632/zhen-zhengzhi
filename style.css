@@ -1,0 +1,104 @@
+/* 色彩變數：淺色模式為預設 */
+:root {
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --text: #1c1c1e;
+  --muted: #5a5a60;
+  --border: #e2e2e0;
+  --accent: #1f5fa8;
+  color-scheme: light dark;
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121214;
+    --surface: #1c1c1f;
+    --text: #ececee;
+    --muted: #a0a0a8;
+    --border: #2e2e33;
+    --accent: #7fb0ea;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  line-height: 1.7;
+}
+
+.site-header,
+main,
+.site-footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.site-header {
+  padding-top: 64px;
+  padding-bottom: 32px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 1.125rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 0 0 16px;
+}
+
+.principles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.principles li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+.principles h3 {
+  margin: 0 0 4px;
+  font-size: 1.125rem;
+}
+
+.principles p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.site-footer {
+  padding-top: 48px;
+  padding-bottom: 32px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* 平板以上：三原則並排 */
+@media (min-width: 640px) {
+  .principles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
